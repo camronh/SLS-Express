@@ -149,7 +149,7 @@ For the secrets, they will need to be set in the github secrets and the github d
 3. Serverless.yml environment variables
 4. GitHub actions .github/workflows/\*.yml environment variables
 
-The first 2 are pretty self explanitory and there are also some  you can use to make this easier.
+The first 2 are pretty self explanitory and there are also some you can use to make this easier.
 
 ### Local .env
 
@@ -216,7 +216,7 @@ provider:
   stage: ${self:custom.stage}
   runtime: nodejs14.x
   environment:
-    API_KEY: ${{ secrets.API_KEY }} # Our secret
+    API_KEY: ${ env.API_KEY } # Our secret
 
 ```
 
