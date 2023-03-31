@@ -7,7 +7,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/path/:pathParam", function (req, res) {
-  res.send("Hello World! " + req.params.pathParam);
+  res.send("Hello World! We on V2!\n\n" + req.params.pathParam);
 });
 
 module.exports.handler = serverless(app);
