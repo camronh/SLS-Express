@@ -1,9 +1,10 @@
-name: Deploy master branch
+name: Deploy branches
 
 on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   deploy:
@@ -19,10 +20,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+      - name: Set stage based on branch
+        id: set_stage
+        run: |
+          if [[ $GITHUB_REF == "refs/heads/main" ]]; then
+            echo "::set-output name=stage::prod"
+          else
+            echo "::set-output name=stage::dev"
+          fi
       - name: serverless deploy
         uses: serverless/github-action@v3.1
         with:
-          args: deploy
+          args: deploy --stage ${{ steps.set_stage.outputs.stage }}
         env:
           # or if using AWS credentials directly
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
