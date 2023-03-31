@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "set-secrets": "gh secret set -f .env"
+    "set-secrets": "gh secret set -f .env",
+    "start": "ts-node index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only index.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,10 @@
     "serverless-http": "^3.2.0"
   },
   "devDependencies": {
-    "dotenv": "^16.0.3"
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.15.11",
+    "dotenv": "^16.0.3",
+    "serverless-plugin-typescript": "^2.1.4",
+    "typescript": "^5.0.3"
   }
 }

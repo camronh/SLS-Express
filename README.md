@@ -239,3 +239,63 @@ env:
 3. Add to serverless.yml
 4. Add to .github/workflows/\*.yml
 5. Commit and push
+
+## Typescript
+
+Lets add Typescript, lets see how it goes!
+
+### Install
+
+Make sure you have tsc and ts-node installed globally.
+
+Install dependencies
+
+```bash
+npm install --save-dev typescript @types/node @types/express
+```
+
+```bash
+tsc --init
+```
+
+Change the compiler options to have an output folder so we can gitignore it
+
+```json
+{
+  "compilerOptions": {
+    "outDir": "dist"
+  }
+}
+```
+
+Then add `dist/` to the `.gitignore`
+
+---
+
+https://www.serverless.com/plugins/serverless-plugin-typescript
+
+```
+npm install -D serverless-plugin-typescript
+```
+
+```yaml
+plugins:
+  - serverless-plugin-typescript
+```
+
+```json
+{
+  "compilerOptions": {
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "target": "es5",
+    "outDir": ".build",
+    "moduleResolution": "node",
+    "lib": ["es2015"],
+    "rootDir": "./"
+  },
+  "exclude": ["node_modules"]
+}
+```
