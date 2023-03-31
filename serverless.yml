@@ -6,7 +6,7 @@ provider:
   stage: ${self:custom.stage}
   # lambdaHashingVersion: "20201221"
   environment:
-    API_KEY: ${ env:API_KEY }
+    API_KEY: ${env:API_KEY}
 
 functions:
   app:
