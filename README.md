@@ -126,7 +126,7 @@ jobs:
 
 We will need to set our secrets, or this will fail on deployment.
 
-### Secrets
+## Secrets
 
 Now from here, this will require that the repo is published to github already.
 
@@ -134,11 +134,108 @@ Now from here, this will require that the repo is published to github already.
 2. Go to secrets in the left pane, then actions
 3. Add the secrets `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` with the values from the aws-cli (use `cat ~/.aws/credentials` to see them)
 
-
 ### Deploying
 
 Thats it! Now push to main and check your actions tab to keep up with the progress of the deployment. If it fails, you can see the logs in the actions tab. If it succeeds, you can see the url in the logs.
 
-## Conclusion
+## Env Vars
 
-This is a pretty simple example of how to get started with serverless. We will be using this as a base for our other APIs. We will also be using this as a base for our other infrastructure. We will be using this to deploy our permissions and other infrastructure. 
+So for us to include .env variables in our express app when using ci/cd we need to do a few things. To keep the legwork minimal, we need to keep **only** secrets in our .env file. Any non-secrets can go in a config file or can be imported some other way, but need to be published to the repo.
+
+For the secrets, they will need to be set in the github secrets and the github deploy .yml. Then we will need to set them in the serverless.yml file. All 4 of these need to be in sync for CI/CD to work:
+
+1. Local .env
+2. GitHub Secrets
+3. Serverless.yml environment variables
+4. GitHub actions .github/workflows/\*.yml environment variables
+
+The first 2 are pretty self explanitory and there are also some you can use to make this easier.
+
+### Local .env
+
+We will just use dotenv here. It wont be necessary in prod but we will go ahead and install it anyways and use it locally.
+
+```bash
+npm i -D dotenv
+# Put API_KEY in .env file
+touch .env
+```
+
+> Remember to add `.env` to your .gitignore
+
+Add the API Key
+
+```
+API_KEY=123456789
+```
+
+Then add the following to the top of the index.js file. We'll wrap it in a try catch to future proof this in case we need to remove dotenv later.
+
+```js
+try {
+  require("dotenv").config();
+} catch (e) {
+  console.log("No .env file found");
+}
+```
+
+Now we can use the API_KEY in our express app.
+
+```js
+app.get("/api", (req, res) => {
+  res.send(process.env.API_KEY);
+});
+```
+
+We can dev locally with that, and when we are satisfied, add them to the github secrets. You can do this using the Web GUI or with the [cli commands](https://cli.github.com/manual/gh_secret_set):
+
+```bash
+gh secret set -f .env
+```
+
+I'll set that in the package.json:
+
+```json
+ "scripts": {
+    "set-secrets": "gh secret set -f .env"
+  },
+```
+
+```bash
+npm run set-secrets
+```
+
+### Serverless.yml
+
+Add to the `environment` section of the `provider` object in the serverless.yml file.
+
+```yaml
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${self:custom.stage}
+  runtime: nodejs14.x
+  environment:
+    API_KEY: ${env:API_KEY}
+```
+
+### GitHub Actions
+
+Add to the `env` section of the `steps` in the .github/workflows/\*.yml file.
+
+```yaml
+env:
+  # or if using AWS credentials directly
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  # Any other secrets here
+  API_KEY: ${{ secrets.API_KEY }} # Our secret
+```
+
+### Steps to add a new var
+
+1. Add to .env
+2. run `npm run set-secrets`
+3. Add to serverless.yml
+4. Add to .github/workflows/\*.yml
+5. Commit and push
