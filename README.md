@@ -251,24 +251,43 @@ Make sure you have tsc and ts-node installed globally.
 Install dependencies
 
 ```bash
-npm install --save-dev typescript @types/node @types/express
+npm install --save-dev typescript @types/node @types/express serverless-plugin-typescript
 ```
 
-```bash
-tsc --init
-```
-
-Change the compiler options to have an output folder so we can gitignore it
+Create a `tsconfig.json` file with this in it:
 
 ```json
 {
   "compilerOptions": {
-    "outDir": "dist"
-  }
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "target": "es5",
+    "outDir": ".build",
+    "moduleResolution": "node",
+    "lib": ["es2015"],
+    "rootDir": "./"
+  },
+  "exclude": ["node_modules"]
 }
 ```
 
-Then add `dist/` to the `.gitignore`
+> Add `.build` to your `.gitignore`
+
+Add this to the base of your `serverless.yml`:
+
+```yaml
+plugins:
+  - serverless-plugin-typescript
+```
+
+Thats pretty much it! Now we can rewrite our express app in ts. You can also add this to your package.json for easy local dev:
+
+```json
+"dev": "ts-node-dev --respawn --transpile-only index.ts"
+```
 
 ---
 

@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "set-secrets": "gh secret set -f .env",
-    "start": "ts-node index.ts",
     "dev": "ts-node-dev --respawn --transpile-only index.ts"
   },
   "keywords": [],
