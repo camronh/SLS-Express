@@ -4,7 +4,9 @@ provider:
   name: aws
   runtime: nodejs14.x
   stage: ${self:custom.stage}
-  region: us-east-1
+  runtime: nodejs14.x
+  environment:
+    API_KEY: ${{ secrets.API_KEY }}
 
 functions:
   app:
