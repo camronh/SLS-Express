@@ -288,33 +288,3 @@ Thats pretty much it! Now we can rewrite our express app in ts. You can also add
 ```json
 "dev": "ts-node-dev --respawn --transpile-only index.ts"
 ```
-
----
-
-https://www.serverless.com/plugins/serverless-plugin-typescript
-
-```
-npm install -D serverless-plugin-typescript
-```
-
-```yaml
-plugins:
-  - serverless-plugin-typescript
-```
-
-```json
-{
-  "compilerOptions": {
-    "preserveConstEnums": true,
-    "strictNullChecks": true,
-    "sourceMap": true,
-    "allowJs": true,
-    "target": "es5",
-    "outDir": ".build",
-    "moduleResolution": "node",
-    "lib": ["es2015"],
-    "rootDir": "./"
-  },
-  "exclude": ["node_modules"]
-}
-```
