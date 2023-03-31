@@ -216,8 +216,7 @@ provider:
   stage: ${self:custom.stage}
   runtime: nodejs14.x
   environment:
-    API_KEY: ${ env.API_KEY } # Our secret
-
+    API_KEY: ${env:API_KEY}
 ```
 
 ### GitHub Actions
@@ -232,3 +231,11 @@ env:
   # Any other secrets here
   API_KEY: ${{ secrets.API_KEY }} # Our secret
 ```
+
+### Steps to add a new var
+
+1. Add to .env
+2. run `npm run set-secrets`
+3. Add to serverless.yml
+4. Add to .github/workflows/\*.yml
+5. Commit and push
