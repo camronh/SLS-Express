@@ -8,7 +8,7 @@ try {
 }
 const app = express();
 
-app.get("/", (_req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
@@ -20,8 +20,4 @@ app.get("/path/:pathParam", (req: Request, res: Response) => {
 });
 
 export const handler = serverless(app);
-
-// Start server locally
-// app.listen(3000, () => {
-//   console.log("Server listening on port 3000");
-// });
+export { app };
