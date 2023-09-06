@@ -14,7 +14,7 @@ export const UserParamsSchema = z.object({
 /*
  * This is the type interface for easy use. It is inferred from the schema above.
  */
-export type UserParams = z.infer<typeof UserParamsSchema>;
+export type IUserParams = z.infer<typeof UserParamsSchema>;
 
 /**
  * This schema represents the data that is stored in the DB. We write it in zod in case we need to use it in migrations or other places.
@@ -28,7 +28,7 @@ export const UserDBEntrySchema = z.object({
 
 export type IUser = z.infer<typeof UserDBEntrySchema>;
 
-const tableName = "A2B-Users";
+const tableName = "Users";
 
 /**
  * User Model
