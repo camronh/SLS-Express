@@ -2,7 +2,7 @@ service: my-express-application
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs16.x
   stage: ${self:custom.stage}
   # lambdaHashingVersion: "20201221"
   environment:
@@ -13,7 +13,7 @@ plugins:
 
 functions:
   app:
-    handler: index.handler
+    handler: src/app.handler
     events:
       - http: ANY /
       - http: "ANY {proxy+}"

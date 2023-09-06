@@ -1,5 +1,6 @@
 import serverless from "serverless-http";
 import express, { Request, Response } from "express";
+import UserRouter from "./routes/userRoutes";
 
 try {
   require("dotenv").config();
@@ -8,7 +9,17 @@ try {
 }
 const app = express();
 
-app.get("/", (_req: Request, res: Response) => {
+// Middleware
+app.use(express.json());
+app.use((req: Request, res: Response, next) => { // Logger
+  console.log(`[${req.method}] ${req.path}`);
+  next();
+});
+
+// Routes
+app.use("/users", UserRouter);
+
+app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
@@ -20,8 +31,4 @@ app.get("/path/:pathParam", (req: Request, res: Response) => {
 });
 
 export const handler = serverless(app);
-
-// Start server locally
-// app.listen(3000, () => {
-//   console.log("Server listening on port 3000");
-// });
+export { app };
