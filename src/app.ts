@@ -1,5 +1,6 @@
 import serverless from "serverless-http";
 import express, { Request, Response } from "express";
+import UserRouter from "./routes/Users";
 
 try {
   require("dotenv").config();
@@ -7,6 +8,16 @@ try {
   console.log("No .env file found");
 }
 const app = express();
+
+// Middleware
+app.use(express.json());
+app.use((req: Request, res: Response, next) => { // Logger
+  console.log(`[${req.method}] ${req.path}`);
+  next();
+});
+
+// Routes
+app.use("/users", UserRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");

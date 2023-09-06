@@ -17,13 +17,6 @@ async function createUser(userParams: IUserParams) {
   return user;
 }
 
-createUser({
-  username: "testUser",
-  email: "cam",
-  firstName: "Camron",
-  lastName: "MacInnes",
-});
-
 /**
  * Get a user by their ID
  * @param userID
@@ -36,7 +29,7 @@ async function getUser(userID: string) {
 /**
  * Update a user's data
  */
-async function updateUser(userID: string, userParams: IUserParams) {
+async function updateUser(userID: string, userParams: Partial<IUserParams>) {
   console.log(`Updating user ${userID}`);
   console.log(userParams);
   const user = await User.get(userID);
