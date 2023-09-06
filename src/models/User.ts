@@ -5,7 +5,7 @@ import { dynamo, marshall, unmarshall } from "../utils";
  * Input params for our model. Can be used for validation in the controller, but we can also parse the interface from it and use just the model.
  */
 export const UserParamsSchema = z.object({
-  username: z.string(),
+  username: z.string().describe("The user's username"),
   email: z.string().email(),
   firstName: z.string(),
   lastName: z.string(),

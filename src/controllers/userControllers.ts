@@ -3,7 +3,9 @@ import { Request, Response } from "express";
 import userService from "../services/userService";
 import { User } from "../models/User";
 
-// Create User Controller
+/**
+ * Create User Controller
+ */
 export const createUser = async (req: Request, res: Response) => {
   try {
     const userParams = User.inputSchema.parse(req.body);
@@ -18,7 +20,9 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
-// Get User Controller
+/**
+ * Get User Controller
+ */
 export const getUser = async (req: Request, res: Response) => {
   const userID = req.params.id;
   try {
@@ -30,7 +34,9 @@ export const getUser = async (req: Request, res: Response) => {
   }
 };
 
-// Update User Controller
+/**
+ * Update User Controller
+ */
 export const updateUser = async (req: Request, res: Response) => {
   const userID = req.params.id;
   try {
@@ -47,7 +53,9 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-// Delete User Controller
+/**
+ * Delete User Controller
+ */
 export const deleteUser = async (req: Request, res: Response) => {
   const userID = req.params.id;
   try {

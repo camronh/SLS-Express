@@ -1,8 +1,8 @@
 // User Routes
-
 import { Router } from "express";
 
 const app = Router();
+
 // Import the necessary controllers
 import { createUser, getUser, updateUser, deleteUser } from "../controllers/userControllers";
 
