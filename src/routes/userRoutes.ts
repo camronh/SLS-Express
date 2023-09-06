@@ -26,6 +26,7 @@ app.get("/:id", async (req, res) => {
   const userID = req.params.id;
   try {
     const user = await userService.getUser(userID);
+    if (!user) throw new Error("User not found");
     res.status(200).send(user);
   } catch (error) {
     res.status(404).send({ error: `Failed to fetch user` });

@@ -1,6 +1,6 @@
 import serverless from "serverless-http";
 import express, { Request, Response } from "express";
-import UserRouter from "./routes/Users";
+import UserRouter from "./routes/userRoutes";
 
 try {
   require("dotenv").config();
