@@ -73,9 +73,9 @@ export class User {
       Key: marshall({ userID }),
     };
 
-    const { Item } = await dynamo.getItem(params);
-    if (!Item) throw new Error("User not found");
-    const userData = unmarshall(Item) as IUser;
+    const result = await dynamo.getItem(params);
+    if (!result || !result.Item) throw new Error("User not found");
+    const userData = unmarshall(result.Item) as IUser;
 
     return new User(userData);
   }

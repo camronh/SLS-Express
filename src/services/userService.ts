@@ -17,6 +17,13 @@ async function createUser(userParams: IUserParams) {
   return user;
 }
 
+createUser({
+  username: "testUser",
+  email: "cam",
+  firstName: "Camron",
+  lastName: "MacInnes",
+});
+
 /**
  * Get a user by their ID
  * @param userID
