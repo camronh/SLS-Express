@@ -65,4 +65,35 @@ describe("User Service", () => {
       expect(error.message).to.equal("User not found");
     }
   });
+
+  // Edge case test for getUser function with non-existing user
+  it("should throw an error when getting a non-existing user", async () => {
+    const nonExistingUserId = "nonExistingUserId";
+    try {
+      await userService.getUser(nonExistingUserId);
+    } catch (error) {
+      expect(error.message).to.equal("User not found");
+    }
+  });
+
+  // Edge case test for updateUser function with non-existing user
+  it("should throw an error when updating a non-existing user", async () => {
+    const nonExistingUserId = "nonExistingUserId";
+    const updatedUserParams = { ...userParams, firstName: "Updated" };
+    try {
+      await userService.updateUser(nonExistingUserId, updatedUserParams);
+    } catch (error) {
+      expect(error.message).to.equal("User not found");
+    }
+  });
+
+  // Edge case test for deleteUser function with non-existing user
+  it("should throw an error when deleting a non-existing user", async () => {
+    const nonExistingUserId = "nonExistingUserId";
+    try {
+      await userService.deleteUser(nonExistingUserId);
+    } catch (error) {
+      expect(error.message).to.equal("User not found");
+    }
+  });
 });
