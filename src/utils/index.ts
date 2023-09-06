@@ -1,3 +1,3 @@
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-
-export const dynamo = new DynamoDBClient({ region: "us-east-1" });
+import { DynamoDB } from "@aws-sdk/client-dynamodb";
+export const dynamo = new DynamoDB({ region: "us-east-1" });
+export { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
